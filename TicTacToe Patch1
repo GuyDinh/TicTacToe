@@ -1,0 +1,653 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+/***************************************************************
+* Name        : Tic Tac Toe
+* Author      : Trong Dinh
+* Created     : 2/24/2020
+* Course      : CIS 169 - C#
+* Version     : 1.0
+* OS          : Windows 10
+* Copyright   : This is my own original work based on            *               specifications issued by our instructor
+* Description : This is a tic tac toe game. Three squares in a row wins
+*               Input: Players take turn claiming squares.
+*               Output: Winner
+* Academic Honesty: I attest that this is my original work.
+* I have not used unauthorized source code, either modified or * * unmodified. I have not given other fellow student(s) access to * my program.         
+***************************************************************/
+namespace TicTacToeDinh
+{
+    /***************************************************************
+    * Name        : CIS 169
+    * Author      : Trong Dinh
+    * Created     : 2/24/2020
+    ***************************************************************/
+    public partial class TicTacToe : Form
+    {
+        bool xFirstTurn = true; //True if X went first this game. False if O went first this game.
+        bool xTurn = true; //True if it is X's turn, false if it is O's turn.
+        int xWinCount = 0; //Counter for X's wins.
+        int oWinCount = 0; //Counter for O's wins.
+        int moveCount = 0; //Counts moves. Should never go past 9.
+        public TicTacToe()
+        {
+            InitializeComponent();
+        }
+        /**************************************************************
+        * Name: boxOne_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxOne_Click(object sender, EventArgs e)
+        {
+            if (boxOne.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxOne.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck123();
+                    winCheck147();
+                    winCheck159();
+                    tieCheck();
+                }
+                else
+                {
+                    boxOne.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck123();
+                    winCheck147();
+                    winCheck159();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxTwo_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxTwo_Click(object sender, EventArgs e)
+        {
+            if (boxTwo.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxTwo.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck123();
+                    winCheck258();
+                    tieCheck();
+                }
+                else
+                {
+                    boxTwo.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck123();
+                    winCheck258();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxThree_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxThree_Click(object sender, EventArgs e)
+        {
+            if (boxThree.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxThree.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck123();
+                    winCheck369();
+                    winCheck357();
+                    tieCheck();
+                }
+                else
+                {
+                    boxThree.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck123();
+                    winCheck369();
+                    winCheck357();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxFour_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxFour_Click(object sender, EventArgs e)
+        {
+            if (boxFour.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxFour.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck456();
+                    winCheck147();
+                    tieCheck();
+                }
+                else
+                {
+                    boxFour.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck456();
+                    winCheck147();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxFive_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxFive_Click(object sender, EventArgs e)
+        {
+            if (boxFive.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxFive.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck456();
+                    winCheck258();
+                    winCheck159();
+                    winCheck357();
+                    tieCheck();
+                }
+                else
+                {
+                    boxFive.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck456();
+                    winCheck258();
+                    winCheck159();
+                    winCheck357();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxSix_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxSix_Click(object sender, EventArgs e)
+        {
+            if (boxSix.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxSix.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck456();
+                    winCheck369();
+                    tieCheck();
+                }
+                else
+                {
+                    boxSix.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck456();
+                    winCheck369();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxSeven_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxSeven_Click(object sender, EventArgs e)
+        {
+            if (boxSeven.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxSeven.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck789();
+                    winCheck147();
+                    winCheck357();
+                    tieCheck();
+                }
+                else
+                {
+                    boxSeven.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck789();
+                    winCheck147();
+                    winCheck357();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxEight_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxEight_Click(object sender, EventArgs e)
+        {
+            if (boxEight.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxEight.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck789();
+                    winCheck258();
+                    tieCheck();
+                }
+                else
+                {
+                    boxEight.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck789();
+                    winCheck258();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: boxNine_Click
+        * Description: Sets this label to X or O. Checks for a win or tie.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void boxNine_Click(object sender, EventArgs e)
+        {
+            if (boxNine.Text == "")
+            {
+                if (xTurn == true)
+                {
+                    boxNine.Text = "X";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck789();
+                    winCheck369();
+                    winCheck159();
+                    tieCheck();
+                }
+                else
+                {
+                    boxNine.Text = "O";
+                    incrementMoveCount();
+                    changeTurn(ref xTurn);
+                    winCheck789();
+                    winCheck369();
+                    winCheck159();
+                    tieCheck();
+                }
+            }
+        }
+        /**************************************************************
+        * Name: exitButton_Click
+        * Description: Closes the program.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        /**************************************************************
+        * Name: incrementMoveCount
+        * Description: Increments move count.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void incrementMoveCount()
+        {
+            moveCount++;
+        }
+        /**************************************************************
+        * Name: changeTurn
+        * Description: Changes boolean to the opposite value.
+        * Input: ref bool
+        * Output:
+        ***************************************************************/
+        private void changeTurn(ref bool inXTurn)
+        {
+            if (inXTurn == true)
+            {
+                inXTurn = false;
+                turnLabel.Text = "Turn: O";
+            }
+            else
+            {
+                inXTurn = true;
+                turnLabel.Text = "Turn: X";
+            }
+        }
+        /**************************************************************
+        * Name: playerXWin
+        * Description: Called when player X wins the game. Increments win count. Clears the board.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void playerXWin()
+        {
+            MessageBox.Show("Player X has won.");
+            xWinCountLabel.Text = "X wins: " + ++xWinCount;
+            moveCount = 0;
+            resetBoard();
+        }
+        /**************************************************************
+        * Name: playerOWin
+        * Description: Called when player O wins the game. Increments win count. Clears the board.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void playerOWin()
+        {
+            MessageBox.Show("Player O has won.");
+            oWinCountLabel.Text = "O wins: " + ++oWinCount;
+            moveCount = 0;
+            resetBoard();
+        }
+        /**************************************************************
+        * Name: resetBoard
+        * Description: Sets all boxes to empty. Changes the first turn player for next round.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void resetBoard()
+        {
+            boxOne.Text = "";
+            boxTwo.Text = "";
+            boxThree.Text = "";
+            boxFour.Text = "";
+            boxFive.Text = "";
+            boxSix.Text = "";
+            boxSeven.Text = "";
+            boxEight.Text = "";
+            boxNine.Text = "";
+            changeTurn(ref xFirstTurn);
+            if (xFirstTurn == true)
+            {
+                xTurn = true;
+            }
+            else
+            {
+                xTurn = false;
+            }
+        }
+        /**************************************************************
+        * Name: tieCheck
+        * Description: Checks to see if all moves have been played. Resets the board if it is a tie game. Should be checked last.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void tieCheck()
+        {
+            if (moveCount == 9)
+            {
+                MessageBox.Show("Game has tied.");
+                moveCount = 0;
+                resetBoard();
+            }
+        }
+        /**************************************************************
+        * Name: winCheck123
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck123()
+        {
+            if (boxOne.Text == "X")
+            {
+                if (boxTwo.Text == "X")
+                {
+                    if (boxThree.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxOne.Text == "O")
+            {
+                if (boxTwo.Text == "O")
+                {
+                    if (boxThree.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck456
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck456()
+        {
+            if (boxFour.Text == "X")
+            {
+                if (boxFive.Text == "X")
+                {
+                    if (boxSix.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxFour.Text == "O")
+            {
+                if (boxFive.Text == "O")
+                {
+                    if (boxSix.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck789
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck789()
+        {
+            if (boxSeven.Text == "X")
+            {
+                if (boxEight.Text == "X")
+                {
+                    if (boxNine.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxSeven.Text == "O")
+            {
+                if (boxEight.Text == "O")
+                {
+                    if (boxNine.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck147
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck147()
+        {
+            if (boxOne.Text == "X")
+            {
+                if (boxFour.Text == "X")
+                {
+                    if (boxSeven.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxOne.Text == "O")
+            {
+                if (boxFour.Text == "O")
+                {
+                    if (boxSeven.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck258
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck258()
+        {
+            if (boxTwo.Text == "X")
+            {
+                if (boxFive.Text == "X")
+                {
+                    if (boxEight.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxTwo.Text == "O")
+            {
+                if (boxFive.Text == "O")
+                {
+                    if (boxEight.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck369
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck369()
+        {
+            if (boxThree.Text == "X")
+            {
+                if (boxSix.Text == "X")
+                {
+                    if (boxNine.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxThree.Text == "O")
+            {
+                if (boxSix.Text == "O")
+                {
+                    if (boxNine.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck159
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck159()
+        {
+            if (boxOne.Text == "X")
+            {
+                if (boxFive.Text == "X")
+                {
+                    if (boxNine.Text == "X")
+                    {
+                        playerXWin();
+                    }
+                }
+            }
+            else if (boxOne.Text == "O")
+            {
+                if (boxFive.Text == "O")
+                {
+                    if (boxNine.Text == "O")
+                    {
+                        playerOWin();
+                    }
+                }
+            }
+        }
+        /**************************************************************
+        * Name: winCheck357
+        * Description: Checks to see if a line has been claimed by one player. Calls player win method if yes.
+        * Input: 
+        * Output:
+        ***************************************************************/
+        private void winCheck357()
+        {
+            if (boxThree.Text == "X" && boxFive.Text == "X" && boxSeven.Text == "X")
+            {
+                playerXWin();
+
+            }
+            else if (boxThree.Text == "O" && boxFive.Text == "O" && boxSeven.Text == "O")
+            {
+                playerOWin();
+            }
+        }
+    }
+}
